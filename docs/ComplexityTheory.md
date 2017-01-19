@@ -42,7 +42,6 @@ the number of items (input size).
 * O(N^n) - Exponential (c is constant)
 * O(N!) - Factorial
 
-
 ## Complexity Classes
 * P: Polynomial - problems are efficiently solvable but not all have practical solutions
 * NP: Non-deterministic Polynomial - solutions can be verified in polynomial time

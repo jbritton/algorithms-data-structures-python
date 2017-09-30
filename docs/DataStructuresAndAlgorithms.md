@@ -413,24 +413,201 @@
             4. While the stack is non-empty, look at the top vertex, U, on the stack.  If U has an unmarked incident edge (ie. to a vertex W), then
             push the vertex W onto the stack and mark the edge (U,W).  If U has no unmarked incident edge, the pop U off the stack and print it.
             5. The algorithm terminates when the stack has become empty
-* Traversal Algorithms
-    * Breadth-First Search
-        * We want to visit every node exactly once
-        * Visit the neighbors then the neighbors of these vertices and so on
-        * Running time complexity: Linear O(V+E), V = Vertices, E = Edges
-        * Memory complexity is not good: we have to store a lot of references
-        * Constructs a shortest path: Dijkstra algorithm does a BFS if all the edge weights are equal to 1
-        * Implementation uses a FIFO Queue, starts with an empty queue, we keep checking if we've visited the given node or not, iterate until queue is empty
-        * Applications
-            * AI/Machine learning - robots can discover the surrounding more easily with BFS than DFS
-            * Maximum flow problems - Edmonds-Karp algorithm
-            * Cheyen's algorithm in garbage collection - it helps to maintain active references on the heap memory
-            * Serialization/Deserialization of a tree like structure - allows the tree to be reconstructed in an efficient manner
-    * Depth-First Search
-        * a
-                       
+
+
+## Graph Traversal Algorithms
+* Breadth-First Search
+    * We want to visit every node exactly once
+    * Visit the neighbors then the neighbors of these vertices and so on
+    * Running time complexity: Linear O(V+E), V = Vertices, E = Edges
+    * Memory complexity is not good: we have to store a lot of references
+    * Constructs a shortest path: Dijkstra algorithm does a BFS if all the edge weights are equal to 1
+    * Implementation uses a FIFO Queue, starts with an empty queue, we keep checking if we've visited the given node or not, iterate until queue is empty
+    * Applications
+        * AI/Machine learning - robots can discover the surrounding more easily with BFS than DFS
+        * Maximum flow problems - Edmonds-Karp algorithm
+        * Cheyen's algorithm in garbage collection - it helps to maintain active references on the heap memory
+        * Serialization/Deserialization of a tree like structure - allows the tree to be reconstructed in an efficient manner
+* Depth-First Search
+    * Investigated as a strategy for solving mazes by Tremaux in the 19th century
+    * It explores as far as possible along each branch before backtracking
+    * Time complexity is same as BFS: Linear O(V+E), V = Vertices, E = Edges
+    * Memory complexity is a bit better than BFS
+    * Implemented using recursion or iteration
+    * Implementation uses a LIFO Queue, ie. a stack
+    * Symmetrical - starting at left or right both work equally well
+    * Applications
+        * Topological ordering
+        * Kosaraju algorithm for finding strongly connected components in a graph which can be proved to be very important in recommendation systems (ie. YouTube)
+        * Detecting cycles (checking whether a graph is a Directed Acyclic Graph or not)
+        * Generating mazes or finding a way out of a maze
+            
+        
+## Graph Shortest Path Algorithms
+* Shortest path problem - finding a path between two vertices in a graph such that the sum of the weights of its edges is minimized
+* Dijkstra algorithm
+    * Constructed by computer scientist Edsger Dijkstra in 1956
+    * Algorithm can handle positive edge weights
+    * Several variants: it can find shortest path from A to B, but its able to construct a shortest path tree as well => defines shortest path from a source to all the other nodes
+    * Asymptotically the fastest known single-source shortest-path algorithm for arbitrary directed graphs with unbounded negative weights
+    * Algorithm time complexity: Linearithmic O(V*logV + E)
+    * Algorithm is a greedy one: it tries to find the global optimum with the help of a local minimum => it turns out to be good
+    * It is greedy: on every iteration we want to find the minimum distance to the next vertex possible => appropriate data structures are heaps or priority queues    
+* Bellman-Ford algorithm
+    * Invented in 1958 by Bellman and Ford independently
+    * Slower than Dijkstra's but more robust: it can handle negative edge weights too
+    * Dijkstra algorithm chooses the edge greedily, with the lowest cost: Bellman-Ford relaxes all edges at the same time for V-1 iteration
+    * Running time is O(V*E)
+    * Does V-1 iterations and an additional iteration to determine detect cycles
+    * Applications
+        * Cycle detection can prove to be very important
+        * Negative cycles - Bellman-Ford can handle negative edge weights and detect negative cycles
+        * On the FOREX market, it can detect arbitrage situations (mispricing)
+        
+        
+## Applications of Shortest Path Algorithms
+* DAG Shortest Path
+    * Directed Acyclic Graph - has no directed cycles, it is easier to find the shortest path
+    * Sort the vertices into topological order: we iterate through the topological order, relaxing all egdes from the actual vertex
+    * Topological sort algorithm computes the shortest path tree in any edge weighted (can be negative) 
+    * O(E+V)
+    * Much faster than Bellman-Ford or Dijkstra
+    * Applications
+        * knapsack problem
     
 
+## Disjoint sets
+* Also known as union-find data structures
+* Data structure to keep track of a set of elements partitioned into a number of disjoint subsets
+* Main operations: union, find, and makeSet
+* Can be represented by linked lists but usually implemented with tree-like structure
+* Kruskal algorithm, with disjoint sets, we can decide in O(1) time whether two vertexes are in the same set or not
+
+## Spanning Tree
+* Determine which edges with the lowest cost (weight) should be included to connect all vertices in the graph
+* A spanning tree of an undirected graph is a subgraph that includes all the vertices
+* A tree may have several spanning trees
+* A weight is assigned to each edge
+* A minimum spanning tree is then a spanning tree with weight less than or equal to the weight of every other spanning tree
+* Applications: big data analysis, clustering algorithms, minimum cost for telecom company laying cable to a new neighborhood
+* Standard algorithms: Prim's-Jarnik, Kruskal -> greedy algorithms
+
+## Kruskal Algorithm
+* Edge-based algorithm
+* Sorts the edges according to their edge weights
+* Union find data structure: disjoint set
+
+
+## Prims Algorithm
+* Build spanning tree from a given vertex, adding the smallest edge to the minimum spanning tree
+* Vertex-based algorithm
+* Underlying data structure is a heap
+* Running time: O(E*logE), worst case: O(E*logV)
+
+## Prims vs Kruskal Algorithm
+* Prims is faster when graph is dense (ie. many more edges than vertices)
+* Kruskal performs better when graph is sparse (ie. less edges).  
+* Kruskal can have better performance if the edges can be sorted in linear time or the edges are pre-sorted
+
+
+## Applications of Spanning Trees
+* Optimization problems related to roads, cables, pipes, etc.
+* K-means clustering - classify similar items
+* Routing in LAN - spanning tree topology ensures a loop-free topology for any bridged Ethernet local area network
+    
+
+## Sorting Algorithm
+* Sorting algorithms put elements of an array in a certain order (ie. numerical, alphabetical, chronological, etc)
+* Comparison based algorithms: bubble sort, insertion sort, selection sort, merge sort, quicksort
+* Non-comparison based sorting: radix sort, bucket sort
+* Features:
+    * Time complexity: O(N^2), O(NlogN), O(N)
+    * In place - needs only O(1) memory beyond the items being sorted (ie. does not require extra memory)
+    * Recursive - implemented in a recursive manner, especially the divide and conquer algorithms
+    * Stable - maintain the relative order of records with equal values
+
+## Adaptive Sorting Algorithms  
+* Changes its behavior based on information available at runtime
+* Adaptive sort takes advantage of existing order in its input
+* Benefits from local orders, sometimes an unsorted array contains sequences that are sorted by default result in a faster sort
+* Most of the time, existing sorting algorithms can be modified to be adaptive
+
+
+## Bubble Sort
+* Too slow and impractical for most problems
+* Stable and in-place algorithm
+* Time complexity: O(N^2)
+
+
+## Selection Sort
+* Noted for its simplicity and it has performance advantages over more complicated algorithms
+* Particularly useful when auxiliary memory is limited
+* Algorithm divides input list into two parts: sub-array of sorted items, sub-array of unsorted items
+* Algorithm is in-place and not stable
+* Performs better than bubble sort - less swaps
+* Time complexity: O(N^2)
+
+
+## Insertion Sort
+* Simple sorting algorithm, builds final sorted array one item at a time
+* Performs better than bubble sort and selection sort
+* Adaptive algorithm - speeds up when array is already substantially sorted
+* Algorithm is in-place and stable
+* Very good for smaller arrays: 10-20 items
+* Insertion sort requires mores writes because the inner loop can require shifting large sections of the sorted sub-array
+* Insertion sort writes O(N^2) times while selection sort will write only O(N) times
+* Time complexity: O(N^2)
+
+
+## Quicksort
+* An efficient sorting algorithm
+* Well implemented quicksort outperforms heapsort and mergesort
+* Comparison-based algorithm
+* Algorithm is in-place and not stable
+* Time complexity: O(N logN), worst case => O(N^2)
+* Divide and conquer algorithm
+
+
+## Mergesort
+* Divide and conquer algorithm
+* Comparison-based algorithm
+* Algorithm is not in-place and is stable
+* Heapsort has the same time bounds as merge sort - heapsort requires only O(1) auxiliary space, mergesort requires O(N)
+* Efficient quicksort implementations outperform mergesort
+* Mergesort is often the best choice for sorting a linked list: in this situation its relatively easy to implement a merge sort that requires O(1) extra space
+
+
+## Hybrid Algorithms
+* Combines more algorithms to solve a given problem
+* Choses one algorithm depending on the data or switching between them over the course of the algorithm
+* Generally done to combine desired features of different algorithms for better performance
+* Hybrid algorithms combine multiple algorithms that solve the same problem but differ in characteristics (such as performance)
+* The technique can be used when sorting
+    * Introsort = Quicksort + Heapsort
+    * Timsort = Insertion sort + Mergesort
+
+
+## Counting sort
+* Non-comparison based algorithm
+* Operates by counting the number of objects that have each distinct key value
+* Integer sorting algorithm: value MUST be integers
+* Uses arithmetic on counts to determine the positions of each key value in the output sequence
+* Suitable when the variation in keys is not significantly greater than the number of items
+* Can be used as a subroutine in radix sort
+* O(N + k)
+
+
+## Radix sort
+* Non-comparison based algorithm
+* String-based algorithm
+* Sort the elements according to individual characters
+* Stable sorting algorithm
+* Two types: Least-significant-digit, Most-significant-digit
+
+
+
+
+    
 
                                              
         
